@@ -88,7 +88,6 @@ font:
 # //at.alicdn.com/t/font_1832207_c8i9n1ulxlt.css => 1832207_c8i9n1ulxlt
 iconfont: "1832207_igi8uaupcus"
 
-
 menu:
   home: / || home
   posts:
@@ -98,7 +97,7 @@ menu:
     tags: /tags/ || tags
   about: /about/ || user
   friends: /friends/ || heart
-  musics: /musics/ || music
+  # musics: /musics/ || music
   # links: /links/ || magic
 
 # Social Links
@@ -168,7 +167,6 @@ tagcloud:
   end: "#ffbac3" # End color (hex, rgba, hsla or color keywords)
   amount: 200 # Amount of tags, change it if you have more than 200 tags
 
-
 # ---------------------------------------------------------------
 # Third Party Plugins & Services Settings
 # ---------------------------------------------------------------
@@ -217,19 +215,19 @@ valine:
 
 # bgm
 
-audio:
-  - title: cos的2021年度歌单
-    list:
-      - https://music.163.com/playlist?id=7189274318
-  - title: cos的2020年度歌单
-    list:
-      - https://music.163.com/playlist?id=5400313492
-  - title: cos的2019年度歌单
-    list:
-      - https://music.163.com/playlist?id=3144460328
-  - title: ❤️安利向
-    list:
-      - https://music.163.com/playlist?id=3036586237
+# audio:
+#   - title: cos的2021年度歌单
+#     list:
+#       - https://music.163.com/playlist?id=7189274318
+#   - title: cos的2020年度歌单
+#     list:
+#       - https://music.163.com/playlist?id=5400313492
+#   - title: cos的2019年度歌单
+#     list:
+#       - https://music.163.com/playlist?id=3144460328
+#   - title: ❤️安利向
+#     list:
+#       - https://music.163.com/playlist?id=3036586237
 
 # random image api
 image_server: # "https://acg.xydwz.cn/api/api.php"
@@ -284,7 +282,6 @@ baidu_site_verification:
 
 # Enable baidu push so that the blog will push the url to baidu automatically which is very helpful for SEO.
 baidu_push: false
-
 
 #! ---------------------------------------------------------------
 #! DO NOT EDIT THE FOLLOWING `vendors` SETTINGS

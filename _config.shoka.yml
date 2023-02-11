@@ -1,5 +1,5 @@
 # https://shoka.lostyu.me/computer-science/note/theme-shoka-doc/config/
-alternate: cosine
+alternate: ziMu
 
 # Assets
 statics: / #//fastly.jsdelivr.net/gh/amehime/shoka@latest/
@@ -15,11 +15,11 @@ loader:
 fireworks:
   enable: true # 是否启用s
   color: # 烟花颜色
-    - "rgba(255,182,185,.9)"
-    - "rgba(250,227,217,.9)"
-    - "rgba(187,222,214,.9)"
-    - "rgba(138,198,209,.9)"
-    
+    - 'rgba(255,182,185,.9)'
+    - 'rgba(250,227,217,.9)'
+    - 'rgba(187,222,214,.9)'
+    - 'rgba(138,198,209,.9)'
+
 open_graph:
   #twitter_id:
   #google_plus:
@@ -68,7 +68,7 @@ font:
     family: Inconsolata
 # project of https://www.iconfont.cn/
 # //at.alicdn.com/t/font_1832207_c8i9n1ulxlt.css => 1832207_c8i9n1ulxlt
-iconfont: "1832207_c8i9n1ulxlt"
+iconfont: '1832207_c8i9n1ulxlt'
 
 menu:
   home: / || home
@@ -79,21 +79,20 @@ menu:
     tags: /tags/ || tags
   about: /about/ || user
   friends: /friends/ || heart
-# 
+#
 # Social Links
 # Usage: `Key: permalink || icon || color`
 # Key is the link label showing to end users.
 # Value before `||` delimiter is the target permalink,
 # secend value is the name of Font icon.
 social:
-  github: https://github.com/yusixian || github || "#191717"
+  github: https://github.com/ziMu-66ccff || github || "#191717"
   #google: https://plus.google.com/yourname || google
   # twitter: https://twitter.com/amehime || twitter || "#00aff0"
-  zhihu: https://www.zhihu.com/people/qi-jiu-en || zhihu || "#1e88e5"
-  music: https://music.163.com/#/user/home?id=361029804 || cloud-music || "#e60026"
+  music: https://music.163.com/#/user/home?id=575059509 || cloud-music || "#e60026"
   # weibo: https://weibo.com/amehime || weibo || "#ea716e"
   # about: https://about.me/amehime || address-card || "#3b5998"
-  email: mailto:cosine_yu@qq.com || envelope || "#55acd5"
+  email: 3553189793@qq.com || envelope || "#55acd5"
   #facebook: https://www.facebook.com/yourname || facebook
   #stackoverflow: https://stackoverflow.com/yourname || stack-overflow
   #youtube: https://youtube.com/yourname || youtube
@@ -106,7 +105,7 @@ sidebar:
   #position: right
   # Replace the default avatar image and set the url here.
   avatar: avatar.jpg
-  
+
 widgets:
   random_posts: true # 显示随机文章
   recent_comments: true # 显示最近评论
@@ -147,9 +146,9 @@ valine:
     friend: 小伙伴
     investor: 金主
   tagColor:
-    master: "var(--color-orange)"
-    friend: "var(--color-aqua)"
-    investor: "var(--color-pink)"
+    master: 'var(--color-orange)'
+    friend: 'var(--color-aqua)'
+    investor: 'var(--color-pink)'
   tagMember:
     master:
       # - hash of master@email.com
@@ -161,19 +160,19 @@ valine:
       # - hash of investor1@email.com
 
 # bgm
-audio:
-  - title: cos的2021年度歌单
-    list:
-      - https://music.163.com/playlist?id=7189274318
-  - title: cos的2020年度歌单
-    list:
-      - https://music.163.com/playlist?id=5400313492
-  - title: cos的2019年度歌单
-    list:
-      - https://music.163.com/playlist?id=3144460328
-  - title: ❤️安利向
-    list:
-      - https://music.163.com/playlist?id=3036586237
+# audio:
+#   - title: cos的2021年度歌单
+#     list:
+#       - https://music.163.com/playlist?id=7189274318
+#   - title: cos的2020年度歌单
+#     list:
+#       - https://music.163.com/playlist?id=5400313492
+#   - title: cos的2019年度歌单
+#     list:
+#       - https://music.163.com/playlist?id=3144460328
+#   - title: ❤️安利向
+#     list:
+#       - https://music.163.com/playlist?id=3036586237
 
 # Dependencies: https://github.com/amehime/hexo-renderer-multi-markdown-it
 pangu: true
@@ -181,7 +180,6 @@ pangu: true
 # ---------------------------------------------------------------
 # analytics & SEO Settings
 # ---------------------------------------------------------------
-
 
 # Disable Baidu transformation on mobile devices.
 disable_baidu_transformation: true
