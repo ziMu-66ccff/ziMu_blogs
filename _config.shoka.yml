@@ -79,6 +79,7 @@ menu:
     tags: /tags/ || tags
   about: /about/ || user
   friends: /friends/ || heart
+  musics: /musics/ || music
 #
 # Social Links
 # Usage: `Key: permalink || icon || color`
@@ -130,9 +131,9 @@ post:
 # https://valine.js.org/quickstart.html
 
 valine:
-  appId: #Your_appId
-  appKey: #Your_appkey
-  placeholder: ヽ(○´∀`)ﾉ♪ # Comment box placeholder
+  appId: 7aKU72xCWleoxu8LOgpIk3Wg-gzGzoHsz
+  appKey: qiEsRynN9NKvqIrWi3vN8pom
+  placeholder: =v= # Comment box placeholder
   avatar: mp # Gravatar style : mp, identicon, monsterid, wavatar, robohash, retro
   pageSize: 10 # Pagination size
   lang: zh-CN
@@ -160,19 +161,22 @@ valine:
       # - hash of investor1@email.com
 
 # bgm
-# audio:
-#   - title: cos的2021年度歌单
-#     list:
-#       - https://music.163.com/playlist?id=7189274318
-#   - title: cos的2020年度歌单
-#     list:
-#       - https://music.163.com/playlist?id=5400313492
-#   - title: cos的2019年度歌单
-#     list:
-#       - https://music.163.com/playlist?id=3144460328
-#   - title: ❤️安利向
-#     list:
-#       - https://music.163.com/playlist?id=3036586237
+audio:
+  - title: 春樱
+    list:
+      - https://music.163.com/#/playlist?id=7831214337
+  - title: 夏花
+    list:
+      - https://music.163.com/#/playlist?id=7831146927
+  - title: 秋叶
+    list:
+      - https://music.163.com/#/playlist?id=7831126056
+  - title: ziMu 的 2022 年度歌单
+    list:
+      - https://music.163.com/#/playlist?id=7963621257
+  - title: ziMu 的 2011 年度歌单
+    list:
+      - https://music.163.com/#/playlist?id=7168734368
 
 # Dependencies: https://github.com/amehime/hexo-renderer-multi-markdown-it
 pangu: true

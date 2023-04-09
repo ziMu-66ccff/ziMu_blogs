@@ -3,17 +3,17 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: ziMu Space
-subtitle: 25届前端小菜鸡子木
+title: 木子亭
+subtitle: 那年满身灰白，唯此亭溢彩，今日不染尘埃，静坐此亭相伴
 description: 干净澄澈，真诚自然
 keywords: 前端, Vue
 author: ziMu
 language: zh-CN # 这里只可以选 zh-CN、zh-HK、zh-TW、ja、en 这几个格式
-timezone: ''
+timezone: 'Asia/Shanghai'
 
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
-url: https://ysx.cosine.ren/
+url: https://zimu-66ccff.github.io/
 permalink: :link/
 permalink_defaults:
 pretty_urls:
@@ -72,9 +72,19 @@ category_map:
   笔记: note
   青训营笔记: bytedance-note
   算法: algorithm
+  项目: project
   前端: front-end
-  JavaScript: javascript
-  Vue: react
+  JavaScript: javaScript
+  Vue: vue
+  Vue原理实现: vueCore
+  React: react
+  React学习: reactLearn
+  性能优化: performanceOptimization
+  前端工程化: engineering
+  计算机网络: computerNetwork
+  浏览器原理: browser
+
+  带人: teach
 
 tag_map:
 
@@ -165,11 +175,11 @@ autoprefixer:
     - '*.min.css'
 
 algolia:
-  appId: 5EERUHZMGG #Your appId
-  apiKey: ba1b4c3261de1c014238419fb69c2e37 #Your apiKey
-  adminApiKey: c859c3420b1fb4a0cf9f9ad9fb193edc #Your adminApiKey
+  appId: SYT5A9G6CF #Your appId
+  apiKey: 29aa2a083f32d70c7a6f5bec590249a9 #Your apiKey
+  adminApiKey: 57ce4232a0ce25c5c5fe08f516345a63 #Your adminApiKey
   chunkSize: 5000
-  indexName: cos_blogs #"shoka"
+  indexName: ziMu_blogs #"shoka"
   fields:
     - title #必须配置
     - path #必须配置
@@ -200,5 +210,5 @@ feed:
 # Docs: https://hexo.io/docs/one-command-deployment
 deploy:
   type: git
-  repo: https://github.com/yusixian/yusixian.github.io.git # or https://gitee.com/<yourAccount>/<repo>
-  branch: dev
+  repo: https://github.com/ziMu-66ccff/ziMu-66ccff.github.io.git # or https://gitee.com/<yourAccount>/<repo>
+  branch: main

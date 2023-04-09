@@ -97,7 +97,7 @@ menu:
     tags: /tags/ || tags
   about: /about/ || user
   friends: /friends/ || heart
-  # musics: /musics/ || music
+  musics: /musics/ || music
   # links: /links/ || magic
 
 # Social Links
