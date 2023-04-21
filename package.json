@@ -36,7 +36,7 @@
     "js-yaml": "^4.1.0",
     "markdown-it-attrs": "^4.1.6",
     "markdown-it-mermaid": "^0.2.5",
-    "nunjucks": "^3.2.3",
+    "nunjucks": "^3.2.4",
     "pangu": "^4.0.7"
   }
 }
