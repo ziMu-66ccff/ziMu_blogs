@@ -17,8 +17,8 @@ dependencies:
     specifier: ^2.0.0
     version: 2.0.0
   hexo-blog-encrypt:
-    specifier: ^3.1.6
-    version: 3.1.6
+    specifier: ^3.1.7
+    version: 3.1.7
   hexo-deployer-git:
     specifier: ^3.0.0
     version: 3.0.0
@@ -1085,8 +1085,8 @@ packages:
       postcss: 7.0.39
     dev: false
 
-  /hexo-blog-encrypt@3.1.6:
-    resolution: {integrity: sha512-aq/KiuwoHLTMOOw0WiVtoTpPfx5x5mjkGJAJgKOp7gH0fjW4Pt1uT2n2MOVWBwY2q3qLtWq60na8RL5qmzZL1w==}
+  /hexo-blog-encrypt@3.1.7:
+    resolution: {integrity: sha512-JI05orX181wKYYXBemxEpCHsDD5HNc8Z0zmmo3sh/xS4upoMLBn3EqZjdmPqphS6b/gpoTaUEeKqQ7Ma0jry7Q==}
     dev: false
 
   /hexo-cli@4.3.0:
