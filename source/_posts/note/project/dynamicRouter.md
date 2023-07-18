@@ -62,12 +62,9 @@ categories:
        const localRoutes: RouteRecordRaw[] = [];
 
        // 1.1.读取 router/main 所有的 ts 文件
-       const files: Record<string, any> = import.meta.glob(
-         '../router/main/*_/_.ts',
-         {
-           eager: true,
-         }
-       );
+       const files: Record<string, any> = import.meta.glob('../router/main/*_/_.ts', {
+         eager: true,
+       });
        // 1.2.将加载的对象放到 localRoutes
        for (const key in files) {
          const module = files[key];
