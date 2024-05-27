@@ -3,8 +3,8 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: 木子亭
-subtitle: 那年满身灰白，唯此亭溢彩，今日不染尘埃，静坐此亭相伴
+title: 花圃
+subtitle: 理想的种子，于现实中绽放
 description: 干净澄澈，真诚自然
 keywords: 前端, Vue
 author: ziMu
@@ -70,7 +70,6 @@ category_map:
   随笔: life
 
   笔记: note
-  青训营笔记: bytedance-note
   算法: algorithm
   项目: project
   前端: front-end
@@ -81,8 +80,10 @@ category_map:
   React学习: reactLearn
   性能优化: performanceOptimization
   前端工程化: engineering
+  前端监控: FEMonitoring
   计算机网络: computerNetwork
   浏览器原理: browser
+  CSS: css
 
   学校: school
 

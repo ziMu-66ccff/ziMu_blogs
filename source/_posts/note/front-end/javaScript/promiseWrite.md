@@ -48,31 +48,22 @@ class myPromise {
         ) {
           return value.then(resolve, reject);
         }
-
-        /* 使用微任务API，加入到微任务栈中 */
-        queueMicrotask(() => {
-          if (this.status === PENDING) {
-            this.status = FULFILL;
-            this.value = value;
-            /* 执行fulfilled回调 */
-            this.onFulFilledFns.forEach((fn) => {
-              fn(this.value);
-            });
-          }
+        /* 普通参数时 */
+        this.status = FULFILL;
+        this.value = value;
+        /* 将fulfilled回调拿出来执行（这些回调实际上是把回调注册为微任务） */
+        this.onFulFilledFns.forEach((fn) => {
+          fn();
         });
       }
     };
 
     const reject = (reason) => {
       if (this.status === PENDING) {
-        queueMicrotask(() => {
-          if (this.status === PENDING) {
-            this.status = REJECT;
-            this.reason = reason;
-            this.onRejectedFns.forEach((fn) => {
-              fn(this.reason);
-            });
-          }
+        this.status = REJECT;
+        this.reason = reason;
+        this.onRejectedFns.forEach((fn) => {
+          fn(this.reason);
         });
       }
     };
@@ -87,8 +78,7 @@ class myPromise {
 
   then(onFulFilledFn, onRejectedFn) {
     /* 根据Promise A+标准，若回调不为函数类型则忽视，默认值回调会将状态继续传入下一个 promise 中 */
-    onFulFilledFn =
-      typeof onFulFilledFn === 'function' ? onFulFilledFn : (res) => res;
+    onFulFilledFn = typeof onFulFilledFn === 'function' ? onFulFilledFn : (res) => res;
     onRejectedFn =
       typeof onRejectedFn === 'function'
         ? onRejectedFn
@@ -98,45 +88,53 @@ class myPromise {
 
     /* then方法返回值是一个新 promise */
     return new myPromise((resolve, reject) => {
-      /* 若捕获当前 promise 已经改变状态，则直接调用回调 */
+      /* 若捕获当前 promise 已经改变状态，则直接将其添入微任务队列 */
       if (this.status === FULFILL) {
-        /* 捕获fulfilled回调错误，捕获到则改变新promise状态为拒绝状态 */
-        try {
-          let result = onFulFilledFn(this.value);
-          /* 返回值传递给下一个fulfilled回调 */
-          resolve(result);
-        } catch (err) {
-          reject(err);
-        }
-      }
-
-      if (this.status === REJECT) {
-        try {
-          let result = onRejectedFn(this.reason);
-          /* 返回值传递给下一个fulfilled回调 */
-          resolve(result);
-        } catch (err) {
-          reject(err);
-        }
-      }
-
-      /* 若当前 promise 没改变状态/改变状态的异步还未执行，先储存回调 */
-      if (this.status === PENDING) {
-        this.onFulFilledFns.push(() => {
+        queueMicrotask(() => {
+          /* 捕获fulfilled回调错误，捕获到则改变新promise状态为拒绝状态 */
           try {
             let result = onFulFilledFn(this.value);
+            /* 返回值传递给下一个fulfilled回调 */
             resolve(result);
           } catch (err) {
             reject(err);
           }
         });
-        this.onRejectedFns.push(() => {
+      }
+
+      if (this.status === REJECT) {
+        queueMicrotask(() => {
           try {
             let result = onRejectedFn(this.reason);
+            /* 返回值传递给下一个fulfilled回调 */
             resolve(result);
           } catch (err) {
             reject(err);
           }
+        });
+      }
+
+      /* 若当前 promise 没改变状态/改变状态的异步还未执行，先储存回调 */
+      if (this.status === PENDING) {
+        this.onFulFilledFns.push(() => {
+          queueMicrotask(() => {
+            try {
+              let result = onFulFilledFn(this.value);
+              resolve(result);
+            } catch (err) {
+              reject(err);
+            }
+          });
+        });
+        this.onRejectedFns.push(() => {
+          queueMicrotask(() => {
+            try {
+              let result = onRejectedFn(this.reason);
+              resolve(result);
+            } catch (err) {
+              reject(err);
+            }
+          });
         });
       }
     });
@@ -177,7 +175,7 @@ class myPromise {
 
   3. 设计 onFullfilledFns, onRejectedFns 两个数组
 
-     - `this.onFullfilledFns = []`, `this,onRejectedFns = []`，初始化`onFullfilledFns`,`onRejectedFns`来存储成功时和失败时要触发的`callback`。
+     - `this.onFullfilledFns = []`, `this,onRejectedFns = []`，初始化`onFullfilledFns`,`onRejectedFns`来存储成功时和失败时将要注册为微任务的`callback`。
 
 - 设计 resolve 函数
 
@@ -193,12 +191,11 @@ class myPromise {
      - 是的话，`return value.then(resolve, reject)`则调用 value 的`then`方法并将`resolve`和`reject`作为参数传递， 并结束 resolve 函数的调用，不再进行接下来的操作。这样当 value 的状态发生改变时就会触发`resolve` or `reject`来修改现在这个 promise 的状态。（因为当`resolve`的`value`为 promise or thenable 的时候，当前 promise 的状态将随 value 的状态改变而改变，并保持一致）。
      - 不是的话，则进行接下来的操作
 
-  3. 将 promise 状态的更改，以及 promise 状态更改时要触发的响应的回调函数的触发操作，放进微任务里面
+  3. 进行 promise 状态的修改，并遍历执行`onFulFilledFn`来将对应的`callback`注册为微任务
 
-     - 调用`queueMicrotask()`将接下来的操作注册为微任务放进微任务队列
      - `this.status === PENDING`判断当前 promise 的状态是否为 PENDING，是的话进行接下来的操作，不是的话，则不做接下来的操作（这样做也是为了保证 promise 的状态一旦确定就不再改变）
      - `this.status = FULLFILL`, `this.value = value`, 将 promise 的状态修改为成功，并将成功的值 value 赋值给 promise.value。
-     - `this.onFullfilledFns.forEach((fn) => fn(this.value))`遍历`onFullfilledFns`，将其中存储的成功时的`callback`全部调用，并将`this.value`作为参数赋值
+     - `this.onFullfilledFns.forEach((fn) => fn())`遍历`onFullfilledFns`，将其中存储的将对应`callback`注册为微任务的函数全部调用执行
 
 - 设计 rejeted 函数
 
@@ -208,12 +205,11 @@ class myPromise {
      - 是的话，则进行接下来的操作
      - 不是的话，则什么都不做（因为 promise 的状态一旦确定就不能再更改。）
 
-  2. 将 promise 状态的更改，以及 promise 状态更改时要触发的响应的回调函数的触发操作，放进微任务里面
+  2. 进行 promise 状态的修改，并遍历执行`onRejectedFn`来将对应的`callback`注册为微任务
 
-     - 调用`queueMicrotask()`将接下来的操作注册为微任务放进微任务队列
      - `this.status === PENDING`判断当前 promise 的状态是否为 PENDING，是的话进行接下来的操作，不是的话，则不做接下来的操作（这样做也是为了保证 promise 的状态一旦确定就不再改变）
      - `this.status = REJECT`, `this.reason = reason`, 将 promise 的状态修改为失败，并将成功的值 reason 赋值给 promise.reason。
-     - `this.onRejectedFns.forEach((fn) => fn(this.reason))`遍历`onRejectedFns`，将其中存储的成功时的`callback`全部调用，并将`this.reason`作为参数赋值
+     - `this.onRejectedFns.forEach((fn) => fn(this.reason))`遍历`onRejectedFns`，将其中存储的将对应`callback`注册为微任务的函数全部调用执行
 
 - 以 try-catch 的形式调用传递来的 executor 函数, 并捕获错误
   1. 在 try 里面调用`executor`，并将`resolve`和`reject`作为参数传递
@@ -232,15 +228,17 @@ class myPromise {
 
 - 状态为`FULLFILL`时
 
-  1. 将接下来的操作放到 try-catch 中
-  2. 在 try 中调用`onFullfilledFn`并将调用`then`方法的 promise 的`value`作为参数传递，将返回值赋值给`result`， 调用`resolve`并将`result`作为参数传递，来修改要返回的 promise 的状态。
-  3. 在 catch 中捕获错误，一旦捕获到错误，马上调用`reject`将要返回的 promise 修改为失败（之所以这样做是因为 onFullfilledFn, onRejectedFn 执行中发生了错误，则会立即返回一个错误的 promise）
+  1. 将接下来的操作注册为微任务
+  2. 将接下来的操作放到 try-catch 中
+  3. 在 try 中调用`onFullfilledFn`并将调用`then`方法的 promise 的`value`作为参数传递，将返回值赋值给`result`， 调用`resolve`并将`result`作为参数传递，来修改要返回的 promise 的状态。
+  4. 在 catch 中捕获错误，一旦捕获到错误，马上调用`reject`将要返回的 promise 修改为失败（之所以这样做是因为 onFullfilledFn, onRejectedFn 执行中发生了错误，则会立即返回一个错误的 promise）
 
 - 状态为`REJECT`时
 
-  1. 将接下来的操作放到 try-catch 中
-  2. 在 try 中调用`onRejectedFn`并将调用`then`方法的 promise 的`reason`作为参数传递，将返回值赋值给`result`， 调用`resolve`并将`result`作为参数传递，来修改要返回的 promise 的状态。
-  3. 在 catch 中捕获错误，一旦捕获到错误，马上调用`reject`将要返回的 promise 修改为失败（之所以这样做是因为 onFullfilledFn, onRejectedFn 执行中发生了错误，则会立即返回一个错误的 promise）
+  1. 将接下来的操作注册为微任务
+  2. 将接下来的操作放到 try-catch 中
+  3. 在 try 中调用`onRejectedFn`并将调用`then`方法的 promise 的`reason`作为参数传递，将返回值赋值给`result`， 调用`resolve`并将`result`作为参数传递，来修改要返回的 promise 的状态。
+  4. 在 catch 中捕获错误，一旦捕获到错误，马上调用`reject`将要返回的 promise 修改为失败（之所以这样做是因为 onFullfilledFn, onRejectedFn 执行中发生了错误，则会立即返回一个错误的 promise）
 
 - 状态为`PENDING`时
   将`FULLFILL`, `REJECT`时要进行的操作，分别封装到两个箭头函数里面（必须用箭头函数，这样`this`才能指向调用`then`方法的 promise），在分别添加到调用`then`方法的 promise 的`onFullfilledFns` and `onRejectedFns`中。

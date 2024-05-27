@@ -2,7 +2,7 @@
 title: vite的两个得力助手-esbuild-rollup
 subtitle: vite的两个得力助手-esbuild-rollup
 link: vite的两个得力助手-esbuild-rollup
-catalog: teue
+catalog: true
 date: 2023-07-26 17:47:06
 tags:
   - 前端
